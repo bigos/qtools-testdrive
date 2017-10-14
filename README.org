@@ -1,0 +1,12 @@
+* Test driving awesome Qtools library
+
+** loading and running
+
+Symlink qtools-testdrive directory to quicklisp/local-projects/ folder
+
+In your REPL execute
+
+#+BEGIN_EXAMPLE
+(ql:quickload :qtools-testdrive)
+(qtools-testdrive:main)
+#+END_EXAMPLE
