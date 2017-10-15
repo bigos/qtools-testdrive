@@ -1,8 +1,10 @@
 * Test driving awesome Qtools library
 
+
 ** loading and running
 
-Symlink qtools-testdrive directory to quicklisp/local-projects/ folder
+Please symlink, or if you are using Windows please copy qtools-testdrive
+directory to quicklisp/local-projects/ folder
 
 In your REPL execute
 
@@ -10,3 +12,12 @@ In your REPL execute
 (ql:quickload :qtools-testdrive)
 (qtools-testdrive:main)
 #+END_EXAMPLE
+
+** QT documentation
+
+See section Classes at:
+http://doc.qt.io/qt-4.8/qtgui-module.html
+
+*** Painting Examples
+
+http://doc.qt.io/qt-4.8/examples-painting.html
