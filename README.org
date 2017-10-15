@@ -18,6 +18,19 @@ In your REPL execute
 See section Classes at:
 http://doc.qt.io/qt-4.8/qtgui-module.html
 
-*** Painting Examples
+*** Examples
+http://doc.qt.io/qt-4.8/all-examples.html#qt-examples-by-module-or-technology
+
+**** Painting Examples
 
 http://doc.qt.io/qt-4.8/examples-painting.html
+
+** QT Reference
+
+http://doc.qt.io/qt-4.8/
+
+Scroll down to see the section Reference
+
+*** All Classes
+
+http://doc.qt.io/qt-4.8/classes.html
