@@ -1,7 +1,8 @@
 * Test driving awesome Qtools library
 
+https://github.com/Shinmera/qtools
 
-** loading and running
+** Loading and running
 
 Please symlink, or if you are using Windows please copy qtools-testdrive
 directory to quicklisp/local-projects/ folder
