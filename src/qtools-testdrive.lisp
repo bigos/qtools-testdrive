@@ -24,7 +24,7 @@
   (q+:qmessagebox-information
    main "Hello World!"
    (format NIL
-           "Hello, dear sir/madam.~%You are running ~a v~a on ~a.~%It is now ~a."
+           "Hello,~%Dear Sir/Madam.~%You are running ~a v~a on ~a.~%It is now ~a."
            (lisp-implementation-type)
            (lisp-implementation-version)
            (machine-type)
