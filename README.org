@@ -14,6 +14,15 @@ In your REPL execute
 (qtools-testdrive:main)
 #+END_EXAMPLE
 
+** REPL development
+
+In your REPL run
+
+#+BEGIN_EXAMPLE
+(in-package :qtools-testdrive)
+(in-readtable :qtools)
+#+END_EXAMPLE
+
 ** QT documentation
 
 See section Classes at:
