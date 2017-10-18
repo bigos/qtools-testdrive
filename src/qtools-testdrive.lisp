@@ -34,18 +34,17 @@
          (my-quit)))
 
 (define-subwidget (window layout) (q+:make-qvboxlayout window)
-  (q+:set-window-title window "Notepad")
-
   (q+:add-widget layout text-edit)
   (q+:add-widget layout quit-button)
-
-  (let ((widget (q+::make-qwidget window)))
-    (setf (q+::layout widget) layout)
-    (setf (q+::central-widget window) widget)))
+  ;; set layout as central widget of window
+  (let ((appwindow (q+:make-qwidget window)))
+    (setf (q+::layout appwindow) layout)
+    (setf (q+::central-widget window) appwindow)))
 
 (define-slot (window button-pressed) ()
   (declare (connected quit-button (clicked)))
   (my-quit))
 
 (defun main ()
-  (with-main-window (window (make-instance 'window))))
+  (with-main-window (window (make-instance 'window))
+    (q+:set-window-title window "Notepad")))
