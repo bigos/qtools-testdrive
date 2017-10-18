@@ -16,6 +16,20 @@
     (when (equalp (q+::exec message-box) (q+::qmessagebox.yes))
       (q+::qcoreapplication-quit))))
 
+(defun my-open (window)
+  (let ((file-name (q+::qfiledialog-get-open-file-name window "Open your first QT file" "" "*.*" ))
+        (buffer (make-string 4096))
+        (read 0)
+      )
+    (unless (equalp file-name "")
+      (with-open-file (in file-name)
+        (format t "file name ~S~%" file-name)
+        (setf read (read-sequence buffer in))
+        ;; (format t "read in ~S ~A~%" (subseq buffer 0 read) read)
+        (format t "~A~%" (org.shirakumo.qtools+common-lisp::find-children window window))
+        ;;(q+::set-text text-win (subseq buffer 0 read))
+        ))))
+
 (define-widget window (QMainWindow)
   ())
 
@@ -25,7 +39,7 @@
 
 (define-menu (window File)
   (:item ("Open..." (ctrl o))
-         (my-quit))
+         (my-open window))
   (:separator)
   (:item ("Save" (ctrl s))
          (my-quit))
@@ -47,4 +61,5 @@
 
 (defun main ()
   (with-main-window (window (make-instance 'window))
-    (q+:set-window-title window "Notepad")))
+    (q+:set-window-title window "Notepad")
+    (setf *text-widget* nil)))
