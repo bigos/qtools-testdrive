@@ -7,7 +7,8 @@
   :author "Your Name <your.name@example.com>"
   :license "Specify license here"
   :serial t
-  :depends-on (:qtcore
+  :depends-on (:qtools
+               :qtcore
                :qtgui)
   :components ((:file "package")
                (:module "src" :components

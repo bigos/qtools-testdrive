@@ -6,29 +6,57 @@
 
 (named-readtables:in-readtable :qtools)
 
-(define-widget main (QWidget)
+
+(defun my-quit ()
+  (let ((message-box (q+::make-qmessagebox)))
+    (q+::set-window-title message-box "Notepad")
+    (q+::set-text message-box "Are you sure you want to quit?")
+    (q+::set-standard-buttons message-box (logior (q+::qmessagebox.yes) (q+::qmessagebox.no)))
+    (q+::set-default-button message-box (q+::qmessagebox.no))
+    (when (equalp (q+::exec message-box) (q+::qmessagebox.yes))
+      (q+::qcoreapplication-quit))))
+
+(defun my-open (window)
+  (let ((file-name (q+::qfiledialog-get-open-file-name window "Open your first QT file" "" "*.*" ))
+        (buffer (make-string 4096))
+        (read 0))
+    (unless (equalp file-name "")
+      (with-open-file (in file-name)
+        (format t "file name ~S~%" file-name)
+        (setf read (read-sequence buffer in))
+        (with-slots-bound (window window)
+          (q+::set-text text-edit (subseq buffer 0 read)))))))
+
+(define-widget window (QMainWindow)
   ())
 
-(define-subwidget (main button) (q+:make-qpushbutton "Click Me!" main))
+(define-subwidget (window text-edit) (q+:make-qtextedit))
 
-(define-subwidget (main layout) (q+:make-qhboxlayout main)
-  (q+:add-widget layout button))
+(define-subwidget (window quit-button) (q+:make-qpushbutton "&Quit!" window))
 
-(defun timestamp (&optional (universal-time (get-universal-time)))
-  (multiple-value-bind (s m h dd mm yy day) (decode-universal-time universal-time)
-    (format NIL "~[Monday~;Tuesday~;Wednesday~;Thursday~;Friday~;Saturday~;Sunday~] ~% the ~d~[st~;nd~;rd~:;th~] ~% of ~[January~;February~;March~;April~;May~;June~;July~;August~;September~;October~;November~;December~] ~% ~d, ~% ~2,'0d:~2,'0d:~2,'0d"
-            day dd (1- (mod dd 10)) (1- mm) yy h m s)))
+(define-menu (window File)
+  (:item ("Open..." (ctrl o))
+         (my-open window))
+  (:separator)
+  (:item ("Save" (ctrl s))
+         (my-quit))
+  (:separator)
+  (:item ("Quit" (ctrl q))
+         (my-quit)))
 
-(define-slot (main button-pressed) ()
-  (declare (connected button (released)))
-  (q+:qmessagebox-information
-   main "Hello World!"
-   (format NIL
-           "Hello, dear sir/madam.~%You are running ~a v~a on ~a.~%It is now ~a."
-           (lisp-implementation-type)
-           (lisp-implementation-version)
-           (machine-type)
-           (timestamp))))
+(define-subwidget (window layout) (q+:make-qvboxlayout window)
+  (q+:add-widget layout text-edit)
+  (q+:add-widget layout quit-button)
+  ;; set layout as central widget of window
+  (let ((appwindow (q+:make-qwidget window)))
+    (setf (q+::layout appwindow) layout)
+    (setf (q+::central-widget window) appwindow)))
+
+(define-slot (window button-pressed) ()
+  (declare (connected quit-button (clicked)))
+  (my-quit))
 
 (defun main ()
-  (with-main-window (window (make-instance 'main))))
+  (with-main-window (window (make-instance 'window))
+    (q+:set-window-title window "Notepad")
+    (setf *text-widget* nil)))
