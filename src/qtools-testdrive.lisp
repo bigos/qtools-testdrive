@@ -35,8 +35,7 @@
                         :direction :output
                         :if-exists :supersede)
       (with-slots-bound (window window)
-        (format fs "~A" (q+::to-plain-text text-edit)
-               :stream fs)))))
+        (format fs "~A" (q+:to-plain-text text-edit))))))
 
 (define-widget window (QMainWindow)
   ())
