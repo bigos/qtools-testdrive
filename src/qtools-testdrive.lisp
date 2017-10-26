@@ -8,16 +8,16 @@
 
 
 (defun my-quit ()
-  (let ((message-box (q+::make-qmessagebox)))
-    (q+::set-window-title message-box "Notepad")
-    (q+::set-text message-box "Are you sure you want to quit?")
-    (q+::set-standard-buttons message-box (logior (q+::qmessagebox.yes) (q+::qmessagebox.no)))
-    (q+::set-default-button message-box (q+::qmessagebox.no))
-    (when (equalp (q+::exec message-box) (q+::qmessagebox.yes))
-      (q+::qcoreapplication-quit))))
+  (let ((message-box (q+:make-qmessagebox)))
+    (q+:set-window-title message-box "Notepad")
+    (q+:set-text message-box "Are you sure you want to quit?")
+    (q+:set-standard-buttons message-box (logior (q+:qmessagebox.yes) (q+:qmessagebox.no)))
+    (q+:set-default-button message-box (q+:qmessagebox.no))
+    (when (equalp (q+:exec message-box) (q+:qmessagebox.yes))
+      (q+:qcoreapplication-quit))))
 
 (defun my-open (window)
-  (let ((file-name (q+::qfiledialog-get-open-file-name window "Open your first QT file" "" "*.*" ))
+  (let ((file-name (q+:qfiledialog-get-open-file-name window "Open your first QT file" "" "*.*" ))
         (buffer (make-string 4096))
         (read 0))
     (unless (equalp file-name "")
@@ -25,7 +25,7 @@
         (format t "file name ~S~%" file-name)
         (setf read (read-sequence buffer in))
         (with-slots-bound (window window)
-          (q+::set-text text-edit (subseq buffer 0 read)))))))
+          (q+:set-text text-edit (subseq buffer 0 read)))))))
 
 (define-widget window (QMainWindow)
   ())
@@ -49,8 +49,8 @@
   (q+:add-widget layout quit-button)
   ;; set layout as central widget of window
   (let ((appwindow (q+:make-qwidget window)))
-    (setf (q+::layout appwindow) layout)
-    (setf (q+::central-widget window) appwindow)))
+    (setf (q+:layout appwindow) layout)
+    (setf (q+:central-widget window) appwindow)))
 
 (define-slot (window button-pressed) ()
   (declare (connected quit-button (clicked)))
