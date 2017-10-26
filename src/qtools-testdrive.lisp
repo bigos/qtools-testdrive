@@ -1,3 +1,4 @@
+(declaim (optimize (debug 3) (speed 0)))
 ;;;; qtools-testdrive.lisp
 
 (in-package #:qtools-testdrive)
@@ -21,11 +22,21 @@
         (buffer (make-string 4096))
         (read 0))
     (unless (equalp file-name "")
+      (setf *current-file* file-name)
       (with-open-file (in file-name)
         (format t "file name ~S~%" file-name)
         (setf read (read-sequence buffer in))
         (with-slots-bound (window window)
           (q+:set-text text-edit (subseq buffer 0 read)))))))
+
+(defun my-save (Window)
+  (let ((file-name *current-file*))
+    (with-open-file (fs file-name
+                        :direction :output
+                        :if-exists :supersede)
+      (with-slots-bound (window window)
+        (format fs "~A" (q+::to-plain-text text-edit)
+               :stream fs)))))
 
 (define-widget window (QMainWindow)
   ())
@@ -39,7 +50,7 @@
          (my-open window))
   (:separator)
   (:item ("Save" (ctrl s))
-         (my-quit))
+         (my-save window))
   (:separator)
   (:item ("Quit" (ctrl q))
          (my-quit)))
