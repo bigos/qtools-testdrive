@@ -14,6 +14,14 @@ In your REPL execute
 (qtools-testdrive:main)
 #+END_EXAMPLE
 
+*** Windows PATH
+To make it work on Windows you need to make sure that certain MSYS2 paths are
+available. I had success after adding to powershell following paths and then
+running emacs and slime.
+#+BEGIN_EXAMPLE
+$env:PATH="C:\msys64\usr\bin;C:\msys64\mingw64\bin;"+$env:PATH
+#+END_EXAMPLE
+
 ** REPL development
 
 In your REPL run
