@@ -10,8 +10,22 @@ directory to quicklisp/local-projects/ folder
 In your REPL execute
 
 #+BEGIN_EXAMPLE
+(ql:quickload :qtools)
 (ql:quickload :qtools-testdrive)
 (qtools-testdrive:main)
+#+END_EXAMPLE
+
+*** Windows PATH
+To make it work on Windows you need to make sure that certain MSYS2 paths are
+available. I had success after adding to powershell following paths and then
+running emacs and slime.
+#+BEGIN_EXAMPLE
+$env:PATH="C:\msys64\mingw64\bin;C:\msys64\usr\bin;"+$env:PATH
+#+END_EXAMPLE
+
+Also adding pkg_config_path to powershell gave me some success
+#+BEGIN_EXAMPLE
+$env:pkg_config_path="C:\msys64\mingw64\lib\pkgconfig;C:\msys64\mingw64\share\pkgconfig"
 #+END_EXAMPLE
 
 ** REPL development
